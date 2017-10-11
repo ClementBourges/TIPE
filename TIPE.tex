@@ -1,0 +1,181 @@
+  
+	
+	
+% toutes les formules de math doivent étre du type /begin{math}   formule    /end{math}
+	
+%    \section{titre de la partie} pour les parties
+%     \ subsection{titre de la sous partie} pour les sous parties
+
+
+
+\documentclass[12pt]{article}   % document de type article (scientifique)
+\usepackage[utf8]{inputenc}    % pour gérer les accents
+\usepackage[T1]{fontenc}			% pour la grande police
+\usepackage{amssymb}									%
+\usepackage[pdftex]{graphicx} 				%				Je sais plus
+\usepackage{graphics} 								%				
+\usepackage{geometry}									%
+\geometry{hmargin=2.5cm,vmargin=0.5cm}
+
+
+\title{Calculabilité, Complexité et Machine de Turing}    % titre
+\date{ }
+\begin{document}									% début du doc
+\pagestyle{empty}
+\maketitle
+\renewcommand{\contentsname}{Sommaire}   % créer un sommaire
+\Large{\tableofcontents}								% créer un sommaire
+\large
+\thispagestyle{empty}
+\newpage											% new page : sauter une page
+
+
+
+
+
+
+\section{La calculabilité}     % commencer un chapitre par \section{}
+Certains problèmes n'auront jamais de solutions.\\\\Comment les classer ?   Comment mathématiser cette notion ?\\ \\Une solution apportée dans les années 1930: La calculabilité.
+
+\subsection{Récursivité}
+On dit qu'une fonction est récursive lorsque elle est définie à partir d'elle-même.
+\\ \\ La fonction factorielle est récursive: 
+\begin{math} \forall n\in \mathbb{N},\;  n!=n\times(n-1)! \end {math}
+\\\\
+Les fonctions récursives sont calculables \begin{math}\leftrightarrow\end{math} On peut trouver la factorielle de n'importe quel entier naturel
+\subsection{Problèmes décidables - indécidables}
+Trois notions équivalentes:
+\begin{center}
+Fonction récursive \begin{math}\Longleftrightarrow\end{math} Fonction Calculable \begin{math}\Longleftrightarrow\end{math} Problème décidable
+\end{center}
+~\\ Comment passer de fonction calculable à problème décidable ?
+\\\\ Soit P une propriété.
+\\\\ On lui associe sa fonction caracéristique \begin{math}\chi _{p}\end{math}
+\\\\\begin{math}\chi _{p} = 1\end{math} si P est vrai.
+\\\\\begin{math}\chi _{p} = 0\end{math} si P est faux.
+\\\\Lorsque \begin{math}\chi _{p}\end{math} est une fonction calculable alors P est une propriété décidable.
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.75\textwidth]{./shema.png}
+	\label{fig:shema}
+\end{figure}
+
+\subsection {Exemple des équations diophantiennes}
+L'équation \begin{math}<<ax+by=cz>>\end{math} est diophantienne \begin{math}\Longleftrightarrow\end{math}\begin{math}(a,b,c)\in\mathbb{Z}^3\end{math}
+\\\\ On définit les équations diophantiennes: \\\\Du premier degré \begin{math}<<ax+by=cz>>\end{math}\begin{math}(a,b,c)\in\mathbb{Z}^3\end{math}
+\\Du second degré \begin{math}<<ax^2+by^2=cz>>\end{math}\begin{math}(a,b,c)\in\mathbb{Z}^3\end{math}
+\\Du n-ièmme degré \begin{math}<<ax^n+by^n=cz>>\end{math}\begin{math}(a,b,c)\in\mathbb{Z}^3\end{math}
+\\\\Notons \begin{math}D^n_{a,b,c}\end{math} l'équation diophantienne à coefficients entiers a,b,c de degré n et P la propriété "`L'équation admet une solution."'
+\\\\On lui associe sa fonction caractéristique \begin{math}\chi _{p}\end{math} :
+\begin{center}
+\begin{math}\chi _{p}(D^n_{a,b,c})=1\end{math} si \begin{math}P(D^n_{a,b,c})\end{math} est vraie.
+\\\begin{math}\chi _{p}(D^n_{a,b,c})=0\end{math} si \begin{math}P(D^n_{a,b,c})\end{math} est fausse.
+\end{center}
+~\\\\Il n'existe pas d'algorithme capable de retourner l'existence ou la non-existence de solution pour une équation dophantienne de degré supérieur ou égal à 5
+\\\\ \begin{math}\forall(a,b,c)\in\mathbb{Z}^3, \forall n\in[\![0,3]\!]\end{math}, \begin{math}\chi _{p}\end{math} est calculable \begin{math}\Longleftrightarrow\end{math} P est décidable
+\\\\ \begin{math}\forall(a,b,c)\in\mathbb{Z}^3, \forall n\in[\![5,+\infty]\!]\end{math}, \begin{math}\chi _{p}\end{math} n'est pas calculable \begin{math}\Longleftrightarrow\end{math} P est indécidable
+
+\section{La machine de Turing}
+Une machine théorique inventée par Alan Turing en 1936.
+\\Capable de simuler n'importe quel algorithme, Python n'existait pas !
+\\\\Fonctionnement:
+\begin{figure*}[htbp]
+	\centering
+		\includegraphics[width=0.90\textwidth]{./turing.png}
+	\label{fig:turing}
+\end{figure*}
+\newpage
+~\\Une machine de Turing peut-être définie par les données \begin{math}(Q,\Sigma,E,I_{0})\end{math} avec:
+\begin{itemize}
+	\item Q l'ensemble des états possibles
+	\item\begin{math}\Sigma\end{math} l'ensemble des symboles utilisés
+	\item E l'ensemble des transitions
+	\item\begin{math}I_{0}\end{math} l'état initial de la machine
+\end{itemize}
+~La thèse de Church-Turing: Pour tout algorithme, il existe une machine de turing capable de l'éxécuter.
+\\\\Exemple:\\On essaye de coder un algorithme qui transforme la chaîne de caractère ABAB en ACAC\\\\\begin{math}Q=(q_{0},q_{1},stop)\end{math}\\\begin{math}\Sigma=(A,B,C,\emptyset)\end{math}\\E=
+\begin{enumerate}
+	\item \begin{math}(q_{0},\emptyset,\emptyset,\longrightarrow,q_{0})\end{math}
+	\item \begin{math}(q_{0},A,A,\longrightarrow,q_{1})\end{math}  \begin{math}\;\;\;\;\;\end{math} Les instructions sont du type:
+	\item \begin{math}(q_{0},B,C,\longrightarrow,q_{1})\end{math}\begin{math}\;\;\;\;\;\;\;\end{math}(état courant, symbole lu, symbole inscrit, 
+	\item \begin{math}(q_{1},A,A,\longrightarrow,q_{1})\end{math}  \begin{math}\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\end{math} déplacement, nouvel état courant)
+	\item \begin{math}(q_{1},B,C,\longrightarrow,q_{1})\end{math}
+	\item \begin{math}(q_{0},\emptyset,\emptyset,stop,q_{1})\end{math}
+\end{enumerate}
+~\\\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.80\textwidth]{./exempleturing.png}
+	\label{fig:exempleturing}
+\end{figure}
+\newpage
+\section{La complexité}
+Parmi les problèmes décidables ( dont il existe un algorithme de résolution ) certains n'ont pourtant pas de solutions connues. Il est alors nécessaire d'estimer l'efficacité de l'algorithme, c'est le rôle de la complexité.
+\subsection{Définition}
+La complexité juge l’efficacité d’un algorithme pour traiter un problème donné.
+\\Elle peut être de plusieurs natures:
+\begin{itemize}
+	\item Temps de calcul
+	\item Place mémoire
+	\item Nombre d’opérations
+	\item Nombre de déplacement d'une tête de lecture/écriture sur le ruban d'une machine de Turing
+\end{itemize}
+Le but: Etablir une distinction entre les problèmes que l’on saura résoudre et ceux pour lesquels il faudra renoncer, faute de temps ou de place.
+\\\\Pour un problème dont la taille des données est n on parlera de:
+\begin{itemize}
+	\item Complexité exponentielle si elle est en \begin{math}O(k^n) \; k\in\mathbb{N}\end{math}
+	\item Complexité polynomiale si elle est en \begin{math} O(n^k) \; k\in\mathbb{N}\end{math}
+\end{itemize}
+~\\Seuls les algorithmes en complexité polynomiale sont utiles pour des grandes données d'entrées.
+\subsection{Classes P et NP}
+Deux classes de problèmes:
+\begin{itemize}
+	\item P
+	\item NP
+\end{itemize}
+~\\La classe P est formée des problèmes décidables dont la solution est donnée par un algorithme de complexité polynomiale. 
+\\\\La classe NP est formée des problèmes qui peuvent être résolus par un algorithme de complexité polynomiale non déterministe.
+
+\newpage
+\subsection{L'exemple de la primalité}
+On note P le prédicat "`n est premier"'
+\\\\Soit n\begin{math}\in\mathbb{N}\end{math}
+\\\begin{math}P(n)\end{math} vrai\begin{math}\Longleftrightarrow\end{math}  n est premier
+\\\begin{math}P(n)\end{math} faux\begin{math}\Longleftrightarrow \end{math} n n'est pas premier
+\\\\Plusieurs méthodes de résolution:
+\begin{itemize}
+	\item Le crible d’Eratosthène
+	\item Miller Rabin
+	\item AKS
+\end{itemize}
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.70\textwidth]{./algo.png}
+	\label{fig:algo}
+\end{figure}
+~\\L'algorithme de Miller-Rabin n'est pas déterministe.
+\\\\Il commet donc des erreurs:\\Certains nombre composés sont déclarés premiers.
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.80\textwidth]{./erreurmiller1.png}
+	\label{fig:erreurmiller1}
+\end{figure}
+\newpage
+~\\Cependant, sa complexité en temps est très inférieure à celle de AKS
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.80\textwidth]{./aksmiller.png}
+	\label{fig:aksmiller}
+\end{figure}
+~\\En cryptographie, de très grands nombres premiers sont utilisés et aucune erreur ne peut être tolérée. \\\\Pour l'algorithme de MillerRabin (1 témoin de miller), la probabilité qu'un nombre soit premier avec:
+\begin{itemize}
+	\item une itération: 99.1\%
+	\item cinq itérations: \begin{math}(1-(0.09)^5)\cdot100\approx99.999999994\%\end{math}
+\end{itemize}
+\section{Conclusion}
+\begin{itemize}
+	\item Différentes classes de problèmes ont été définies et ont permis de trier les algorithmes
+	\item La machine théorique de Turing a servi de support pour définir la calculabilité et la complexité
+	\item De nombreux problèmes restent inclassables
+\end{itemize}
+
+\end{document}
